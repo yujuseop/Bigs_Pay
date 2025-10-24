@@ -1,4 +1,4 @@
-interface ButtonProps {
+interface FormButtonProps {
   type?: "button" | "submit" | "reset";
   variant?: "primary" | "secondary" | "danger";
   size?: "small" | "medium" | "large";
@@ -9,7 +9,7 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-export const Button = ({
+export const FormButton = ({
   type = "button",
   variant = "primary",
   size = "medium",
@@ -19,7 +19,7 @@ export const Button = ({
   className = "",
   onClick,
   ...props
-}: ButtonProps) => {
+}: FormButtonProps) => {
   const baseClasses =
     "font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer";
   const variantClasses = {
