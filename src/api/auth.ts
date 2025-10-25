@@ -2,8 +2,8 @@ import { APIClient } from "./client";
 
 interface SignupPayload {
   username: string;
-  password: string;
   name: string;
+  password: string;
   confirmPassword: string;
 }
 
@@ -19,10 +19,11 @@ export const signup = async (payload: SignupPayload) => {
 
 export const signin = async (payload: LoginPayload) => {
   const response = await APIClient.post("/auth/signin", payload);
-  localStorage.setItem("token", response.data.accessToken);
+  const accessToken = response.data.accessToken;
+  localStorage.setItem("accessToken", accessToken);
   return response.data.user;
 };
 
 export const logout = async () => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("accessToken");
 };

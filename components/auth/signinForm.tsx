@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSignin } from "@/src/hooks/useAuth";
+import Link from "next/link";
 
 export const SigninSchema = z.object({
   username: z.string().email("유효한 이메일을 입력해주세요."),
@@ -46,10 +47,22 @@ export default function SigninForm() {
         {errors.password && (
           <p className="text-red-500">{errors.password.message}</p>
         )}
-        <FormButton type="submit" variant="primary" size="medium">
+        <FormButton
+          type="submit"
+          variant="primary"
+          size="medium"
+          className="w-full"
+        >
           로그인
         </FormButton>
       </form>
+
+      <div className="text-center text-sm text-gray-500 mt-4">
+        아직 회원이 아니신가요?{" "}
+        <Link href="/signup" className="text-blue-600 hover:underline">
+          회원가입
+        </Link>
+      </div>
     </div>
   );
 }
