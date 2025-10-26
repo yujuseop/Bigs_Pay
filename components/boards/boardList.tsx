@@ -13,16 +13,29 @@ interface Board {
 
 interface BoardListProps {
   selectedCategory?: string;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
 }
 
-export default function BoardList({ selectedCategory }: BoardListProps) {
-  const { data, isLoading, error } = useBoard(0, 10, selectedCategory);
+export default function BoardList({
+  selectedCategory,
+  currentPage,
+  setCurrentPage,
+}: BoardListProps) {
+  const { data, isLoading, error } = useBoard(
+    currentPage,
+    10,
+    selectedCategory
+  );
   const [selectedBoardId, setSelectedBoardId] = useState<number | null>(null);
 
   if (isLoading) return <div>로딩 중</div>;
   if (error) return <div>에러 발생</div>;
   if (!data || !data.content) return <div>게시글 목록을 찾을 수 없습니다.</div>;
   if (data.content.length === 0) return <div>게시글이 없습니다.</div>;
+
+  const totalPages = data.totalPages || 0;
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i);
 
   return (
     <div>
@@ -43,6 +56,41 @@ export default function BoardList({ selectedCategory }: BoardListProps) {
           </li>
         ))}
       </ul>
+
+      {/* 페이지네이션 */}
+      {totalPages > 1 && (
+        <div className="flex justify-center gap-2 mt-4">
+          <button
+            onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+            disabled={currentPage === 0}
+            className="px-3 py-1 border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+          >
+            이전
+          </button>
+          {pageNumbers.map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`px-3 py-1 border border-gray-300 rounded ${
+                currentPage === page
+                  ? "bg-gray-500 text-white"
+                  : "hover:bg-gray-50"
+              }`}
+            >
+              {page + 1}
+            </button>
+          ))}
+          <button
+            onClick={() =>
+              setCurrentPage(Math.min(totalPages - 1, currentPage + 1))
+            }
+            disabled={currentPage === totalPages - 1}
+            className="px-3 py-1 border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+          >
+            다음
+          </button>
+        </div>
+      )}
 
       {selectedBoardId && (
         <BoardDetailModal

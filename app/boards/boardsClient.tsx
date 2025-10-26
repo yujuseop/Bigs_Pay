@@ -8,11 +8,17 @@ import { FormButton } from "@/components/form/formButton";
 export default function BoardsClient() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(0); // 카테고리 변경 시 첫 페이지로 리셋
+  };
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <BoardCategories onCategoryChange={setSelectedCategory} />
+        <BoardCategories onCategoryChange={handleCategoryChange} />
         <FormButton
           onClick={() => setIsCreateModalOpen(true)}
           variant="secondary"
@@ -25,7 +31,11 @@ export default function BoardsClient() {
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
       />
-      <BoardList selectedCategory={selectedCategory || undefined} />
+      <BoardList
+        selectedCategory={selectedCategory || undefined}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }

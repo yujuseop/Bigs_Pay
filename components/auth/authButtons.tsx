@@ -50,7 +50,7 @@ export default function AuthButtons({ variant = "header" }: AuthButtonsProps) {
     return (
       <div className="flex items-center gap-4">
         {variant === "header" && userInfo && (
-          <span className="text-sm text-white bg-blue-500 rounded-md px-2 py-1">
+          <span className="text-sm text-white">
             {userInfo.name} ({userInfo.username})
           </span>
         )}
