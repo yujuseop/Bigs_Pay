@@ -3,6 +3,7 @@
 import { useBoard } from "@/src/hooks/useBoard";
 import { useState } from "react";
 import BoardDetailModal from "./boardDetailModal";
+import LoadingSpinner from "@/components/ui/loadingSpiner";
 
 interface Board {
   id: number;
@@ -29,10 +30,37 @@ export default function BoardList({
   );
   const [selectedBoardId, setSelectedBoardId] = useState<number | null>(null);
 
-  if (isLoading) return <div>로딩 중</div>;
-  if (error) return <div>에러 발생</div>;
-  if (!data || !data.content) return <div>게시글 목록을 찾을 수 없습니다.</div>;
-  if (data.content.length === 0) return <div>게시글이 없습니다.</div>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-20">
+        <LoadingSpinner size="lg" variant="spinner" color="primary" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center py-20 text-red-500">
+        게시글을 불러오는 중 오류가 발생했습니다.
+      </div>
+    );
+  }
+
+  if (!data || !data.content) {
+    return (
+      <div className="flex justify-center items-center py-20 text-gray-500">
+        게시글 목록을 찾을 수 없습니다.
+      </div>
+    );
+  }
+
+  if (data.content.length === 0) {
+    return (
+      <div className="flex justify-center items-center py-20 text-gray-500">
+        게시글이 없습니다.
+      </div>
+    );
+  }
 
   const totalPages = data.totalPages || 0;
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i);

@@ -11,15 +11,14 @@ export default function BoardCategories({
   onCategoryChange,
 }: BoardCategoriesProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const { data: categories, isLoading } = useBoardCategory();
+  const { data: categories } = useBoardCategory();
 
-  if (isLoading) return <p>Loading categories</p>;
-  if (!categories) return <p>카테고리를 찾을 수 없습니다.</p>;
-
-  const categoryArray = Object.entries(categories).map(([key, value]) => ({
-    id: key,
-    name: String(value),
-  }));
+  const categoryArray = categories
+    ? Object.entries(categories).map(([key, value]) => ({
+        id: key,
+        name: String(value),
+      }))
+    : [];
 
   return (
     <select
