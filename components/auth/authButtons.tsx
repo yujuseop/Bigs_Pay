@@ -50,18 +50,27 @@ export default function AuthButtons({ variant = "header" }: AuthButtonsProps) {
     return (
       <div className="flex items-center gap-4">
         {variant === "header" && userInfo && (
-          <span className="text-sm text-white">
+          <span className="text-sm md:text-base lg:text-lg text-white">
             {userInfo.name} ({userInfo.username})
           </span>
         )}
         {variant === "home" && (
           <Link href="/boards">
-            <FormButton variant="primary" size="medium">
+            <FormButton
+              variant="primary"
+              size="medium"
+              className="md:text-base"
+            >
               게시판으로 이동
             </FormButton>
           </Link>
         )}
-        <FormButton variant="secondary" size="medium" onClick={handleLogout}>
+        <FormButton
+          variant="secondary"
+          size="medium"
+          onClick={handleLogout}
+          className="text-sm md:text-base lg:text-lg m-2 "
+        >
           로그아웃
         </FormButton>
       </div>
@@ -69,7 +78,7 @@ export default function AuthButtons({ variant = "header" }: AuthButtonsProps) {
   }
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 text-sm md:text-base lg:text-lg">
       <Link href="/login">
         <FormButton variant="secondary" size="medium">
           로그인

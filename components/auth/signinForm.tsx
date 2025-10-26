@@ -27,7 +27,9 @@ export default function SigninForm() {
   };
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl text-black font-bold mb-4 text-center">로그인</h2>
+      <h2 className="text-xl text-black font-bold mb-4 text-center md:text-2xl lg:text-3xl">
+        로그인
+      </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           label="이메일"

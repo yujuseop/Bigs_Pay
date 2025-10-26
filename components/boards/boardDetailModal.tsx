@@ -90,9 +90,12 @@ export default function BoardDetailModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="글 상세" size="lg">
       {isEditing ? (
-        <form onSubmit={handleSubmit(handleUpdate)} className="space-y-4">
+        <form
+          onSubmit={handleSubmit(handleUpdate)}
+          className="space-y-4 text-sm md:text-base lg:text-lg"
+        >
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1 md:text-base lg:text-lg">
               카테고리
             </label>
             <select
@@ -106,20 +109,20 @@ export default function BoardDetailModal({
               <option value="ETC">기타</option>
             </select>
             {errors.category && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="text-red-500 text-sm mt-1 md:text-base lg:text-lg">
                 {errors.category.message}
               </p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1 md:text-base lg:text-lg">
               제목
             </label>
             <input
               type="text"
               {...register("title")}
-              className="w-full border border-gray-300 rounded-md px-3 py-2"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm md:text-base lg:text-lg"
             />
             {errors.title && (
               <p className="text-red-500 text-sm mt-1">
@@ -129,7 +132,7 @@ export default function BoardDetailModal({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1 md:text-base lg:text-lg">
               내용
             </label>
             <textarea
@@ -148,14 +151,14 @@ export default function BoardDetailModal({
             <button
               type="button"
               onClick={() => setIsEditing(false)}
-              className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
+              className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 text-sm md:text-base lg:text-lg"
             >
               취소
             </button>
             <button
               type="submit"
               disabled={isUpdating}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm md:text-base lg:text-lg"
             >
               {isUpdating ? (
                 <LoadingSpinner size="sm" variant="spinner" color="white" />
@@ -166,17 +169,21 @@ export default function BoardDetailModal({
           </div>
         </form>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 text-sm md:text-base lg:text-lg">
           <div>
-            <h3 className="text-2xl font-bold">{board.title}</h3>
-            <div className="flex gap-4 text-sm text-gray-600 mt-2">
+            <h3 className="text-sm md:text-lg lg:text-xl font-bold">
+              {board.title}
+            </h3>
+            <div className="flex gap-4 text-sm text-gray-600 mt-2 md:text-base lg:text-lg">
               <span>카테고리: {board.boardCategory}</span>
               <span>작성일: {board.createdAt}</span>
             </div>
           </div>
 
           <div className="border-t pt-4">
-            <p className="whitespace-pre-wrap">{board.content}</p>
+            <p className="whitespace-pre-wrap text-sm md:text-base lg:text-lg">
+              {board.content}
+            </p>
           </div>
 
           {board.ImageUrl && (

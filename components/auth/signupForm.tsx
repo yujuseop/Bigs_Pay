@@ -34,8 +34,8 @@ export default function SignupForm() {
     mutate(data);
   };
   return (
-    <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl text-black text-center font-bold mb-4">
+    <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md text-sm md:text-base lg:text-lg">
+      <h2 className="text-xl text-black text-center font-bold mb-4  md:text-2xl lg:text-3xl">
         회원가입
       </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -46,7 +46,7 @@ export default function SignupForm() {
           {...register("username")}
         />
         {errors.username && (
-          <p className="text-red-500">{errors.username.message}</p>
+          <p className="text-red-500 text-sm ">{errors.username.message}</p>
         )}
         <FormField
           label="이름"
@@ -54,7 +54,9 @@ export default function SignupForm() {
           placeholder="name"
           {...register("name")}
         />
-        {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+        {errors.name && (
+          <p className="text-red-500 text-sm ">{errors.name.message}</p>
+        )}
         <FormField
           label="비밀번호"
           type="password"
@@ -62,7 +64,7 @@ export default function SignupForm() {
           {...register("password")}
         />
         {errors.password && (
-          <p className="text-red-500">{errors.password.message}</p>
+          <p className="text-red-500 text-sm ">{errors.password.message}</p>
         )}
         <FormField
           label="비밀번호 확인"
@@ -71,7 +73,9 @@ export default function SignupForm() {
           {...register("confirmPassword")}
         />
         {errors.confirmPassword && (
-          <p className="text-red-500">{errors.confirmPassword.message}</p>
+          <p className="text-red-500 text-sm ">
+            {errors.confirmPassword.message}
+          </p>
         )}
         <FormButton
           type="submit"

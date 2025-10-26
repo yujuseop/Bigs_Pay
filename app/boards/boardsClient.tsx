@@ -16,7 +16,7 @@ export default function BoardsClient() {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 text-sm md:text-base lg:text-lg p-4">
       <div className="flex justify-between items-center">
         <BoardCategories onCategoryChange={handleCategoryChange} />
         <FormButton

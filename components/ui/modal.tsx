@@ -46,11 +46,15 @@ export default function Modal({
       >
         {(title || showCloseButton) && (
           <div className="flex justify-between items-start mb-4">
-            {title && <h2 className="text-xl font-bold text-black">{title}</h2>}
+            {title && (
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-black">
+                {title}
+              </h2>
+            )}
             {showCloseButton && (
               <button
                 onClick={onClose}
-                className="text-gray-500 hover:text-gray-700 text-2xl leading-none"
+                className="text-gray-500 hover:text-gray-700 text-xl md:text-2xl lg:text-3xl leading-none"
                 aria-label="모달 닫기"
               >
                 &times;

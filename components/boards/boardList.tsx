@@ -48,10 +48,16 @@ export default function BoardList({
           >
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-semibold text-lg">{board.title}</h3>
-                <p className="text-sm text-gray-600">{board.category}</p>
+                <h3 className="font-semibold text-sm md:text-lg lg:text-xl">
+                  {board.title}
+                </h3>
+                <p className="text-sm text-gray-600 md:text-base lg:text-lg">
+                  {board.category}
+                </p>
               </div>
-              <span className="text-sm text-gray-500">{board.createdAt}</span>
+              <span className="text-sm text-gray-500 md:text-base lg:text-lg">
+                {board.createdAt}
+              </span>
             </div>
           </li>
         ))}

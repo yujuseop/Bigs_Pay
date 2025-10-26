@@ -21,7 +21,7 @@ export const FormButton = ({
   ...props
 }: FormButtonProps) => {
   const baseClasses =
-    "font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer";
+    "font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer text-sm md:text-base lg:text-lg";
   const variantClasses = {
     primary: "bg-blue-500 text-white hover:bg-blue-600",
     secondary: "bg-gray-500 text-white hover:bg-gray-600",

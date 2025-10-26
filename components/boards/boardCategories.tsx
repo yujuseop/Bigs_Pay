@@ -32,9 +32,15 @@ export default function BoardCategories({
         }
       }}
     >
-      <option value="">카테고리 선택</option>
+      <option value="" className="text-sm md:text-base lg:text-lg">
+        카테고리 선택
+      </option>
       {categoryArray.map((cat) => (
-        <option key={cat.id} value={cat.id}>
+        <option
+          key={cat.id}
+          value={cat.id}
+          className="text-sm md:text-base lg:text-lg"
+        >
           {cat.name}
         </option>
       ))}
