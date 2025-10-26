@@ -24,7 +24,8 @@ export const useSignin = () => {
     mutationFn: signin,
     onSuccess: (user) => {
       console.log("로그인 성공", user);
-      router.push("/");
+      window.dispatchEvent(new Event("loginStateChange"));
+      router.push("/boards");
     },
     onError: (error) => {
       console.log("로그인 실패", error);

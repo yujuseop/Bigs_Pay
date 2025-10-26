@@ -24,3 +24,17 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* 전체 레이아웃 컨테이너 */
+.layout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 auto;
+}
+
+/* 홈페이지 컨테이너 */
+.home-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}

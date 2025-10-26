@@ -3,7 +3,13 @@
 import { useBoardCategory } from "@/src/hooks/useBoard";
 import { useState } from "react";
 
-export default function BoardCategories() {
+interface BoardCategoriesProps {
+  onCategoryChange?: (category: string) => void;
+}
+
+export default function BoardCategories({
+  onCategoryChange,
+}: BoardCategoriesProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const { data: categories, isLoading } = useBoardCategory();
 
@@ -21,7 +27,9 @@ export default function BoardCategories() {
       onChange={(e) => {
         const category = e.target.value;
         setSelectedCategory(category);
-        console.log("선택된 카테고리:", category);
+        if (onCategoryChange) {
+          onCategoryChange(category);
+        }
       }}
     >
       <option value="">카테고리 선택</option>

@@ -1,6 +1,8 @@
 "use client";
 
 import { useBoard } from "@/src/hooks/useBoard";
+import { useState } from "react";
+import BoardDetailModal from "./boardDetailModal";
 
 interface Board {
   id: number;
@@ -9,8 +11,13 @@ interface Board {
   createdAt: string;
 }
 
-export default function BoardList() {
-  const { data, isLoading, error } = useBoard(0, 10);
+interface BoardListProps {
+  selectedCategory?: string;
+}
+
+export default function BoardList({ selectedCategory }: BoardListProps) {
+  const { data, isLoading, error } = useBoard(0, 10, selectedCategory);
+  const [selectedBoardId, setSelectedBoardId] = useState<number | null>(null);
 
   if (isLoading) return <div>로딩 중</div>;
   if (error) return <div>에러 발생</div>;
@@ -18,10 +25,32 @@ export default function BoardList() {
   if (data.content.length === 0) return <div>게시글이 없습니다.</div>;
 
   return (
-    <ul className="space-y-2">
-      {data.content.map((board: Board) => (
-        <li key={board.id}>{board.title}</li>
-      ))}
-    </ul>
+    <div>
+      <ul className="space-y-2">
+        {data.content.map((board: Board) => (
+          <li
+            key={board.id}
+            onClick={() => setSelectedBoardId(board.id)}
+            className="p-4 border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer"
+          >
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="font-semibold text-lg">{board.title}</h3>
+                <p className="text-sm text-gray-600">{board.category}</p>
+              </div>
+              <span className="text-sm text-gray-500">{board.createdAt}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      {selectedBoardId && (
+        <BoardDetailModal
+          boardId={selectedBoardId}
+          isOpen={!!selectedBoardId}
+          onClose={() => setSelectedBoardId(null)}
+        />
+      )}
+    </div>
   );
 }

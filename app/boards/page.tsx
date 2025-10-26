@@ -1,13 +1,9 @@
-import BoardList from "@/components/boards/boardList";
-import BoardDetail from "@/components/boards/boardDetail";
-import BoardCategories from "@/components/boards/boardCategories";
+import BoardsClient from "./boardsClient";
 
 export default function BoardsPage() {
   return (
-    <div>
-      <BoardList />
-      <BoardDetail />
-      <BoardCategories />
+    <div className="layout-container py-4">
+      <BoardsClient />
     </div>
   );
 }
