@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreatePost } from "@/src/hooks/useBoard";
+import LoadingSpinner from "../ui/loadingSpiner";
 
 const createPostSchema = z.object({
   title: z.string().min(1, "제목을 입력해주세요."),
@@ -115,7 +116,11 @@ export default function CreateBoardsModal({
             disabled={isPending}
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
           >
-            {isPending ? "저장 중..." : "저장"}
+            {isPending ? (
+              <LoadingSpinner size="sm" variant="spinner" color="white" />
+            ) : (
+              "저장"
+            )}
           </button>
         </div>
       </form>

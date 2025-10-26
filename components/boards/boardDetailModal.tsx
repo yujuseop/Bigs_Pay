@@ -10,6 +10,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import LoadingSpinner from "../ui/loadingSpiner";
 
 const updatePostSchema = z.object({
   title: z.string().min(1, "제목을 입력해주세요."),
@@ -72,7 +74,7 @@ export default function BoardDetailModal({
   if (isLoading)
     return (
       <Modal isOpen={isOpen} onClose={onClose}>
-        로딩 중
+        <LoadingSpinner size="lg" variant="spinner" color="primary" />
       </Modal>
     );
   if (error)
@@ -155,7 +157,11 @@ export default function BoardDetailModal({
               disabled={isUpdating}
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
             >
-              {isUpdating ? "수정 중..." : "수정"}
+              {isUpdating ? (
+                <LoadingSpinner size="sm" variant="spinner" color="white" />
+              ) : (
+                "수정"
+              )}
             </button>
           </div>
         </form>
@@ -175,7 +181,7 @@ export default function BoardDetailModal({
 
           {board.ImageUrl && (
             <div>
-              <img
+              <Image
                 src={board.ImageUrl}
                 alt="게시글 이미지"
                 className="max-w-full"
@@ -195,7 +201,11 @@ export default function BoardDetailModal({
               disabled={isDeleting}
               className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50"
             >
-              {isDeleting ? "삭제 중..." : "삭제"}
+              {isDeleting ? (
+                <LoadingSpinner size="sm" variant="spinner" color="white" />
+              ) : (
+                "삭제"
+              )}
             </button>
           </div>
         </div>

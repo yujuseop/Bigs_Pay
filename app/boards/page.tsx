@@ -2,7 +2,7 @@ import BoardsClient from "./boardsClient";
 
 export default function BoardsPage() {
   return (
-    <div className="layout-container py-4">
+    <div className="layout-container px-4 py-4">
       <BoardsClient />
     </div>
   );

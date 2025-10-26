@@ -12,12 +12,23 @@ interface AuthButtonsProps {
 
 export default function AuthButtons({ variant = "header" }: AuthButtonsProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userInfo, setUserInfo] = useState<{
+    name: string;
+    username: string;
+  } | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const checkLoginStatus = () => {
       const token = localStorage.getItem("accessToken");
+      const name = localStorage.getItem("userName");
+      const username = localStorage.getItem("username");
+
       setIsLoggedIn(!!token);
+
+      if (token && name && username) {
+        setUserInfo({ name, username });
+      }
     };
 
     checkLoginStatus();
@@ -38,6 +49,11 @@ export default function AuthButtons({ variant = "header" }: AuthButtonsProps) {
   if (isLoggedIn) {
     return (
       <div className="flex items-center gap-4">
+        {variant === "header" && userInfo && (
+          <span className="text-sm text-white bg-blue-500 rounded-md px-2 py-1">
+            {userInfo.name} ({userInfo.username})
+          </span>
+        )}
         {variant === "home" && (
           <Link href="/boards">
             <FormButton variant="primary" size="medium">
