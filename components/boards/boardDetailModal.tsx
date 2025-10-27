@@ -1,17 +1,14 @@
 "use client";
 
 import Modal from "../ui/modal";
-import {
-  useBoardDetail,
-  useUpdatePost,
-  useDeletePost,
-} from "@/src/hooks/useBoard";
+import { useBoardDetail, useUpdatePost } from "@/src/hooks/useBoard";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import LoadingSpinner from "../ui/loadingSpiner";
+import BoardDeleteModal from "./boardDeleteModal";
 
 const updatePostSchema = z.object({
   title: z.string().min(1, "제목을 입력해주세요."),
@@ -32,8 +29,8 @@ export default function BoardDetailModal({
 }: BoardDetailModalProps) {
   const { data, isLoading, error } = useBoardDetail(boardId);
   const { mutate: updatePost, isPending: isUpdating } = useUpdatePost();
-  const { mutate: deletePost, isPending: isDeleting } = useDeletePost();
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const {
     register,
@@ -59,16 +56,6 @@ export default function BoardDetailModal({
         },
       }
     );
-  };
-
-  const handleDelete = () => {
-    if (confirm("정말 삭제하시겠습니까?")) {
-      deletePost(boardId, {
-        onSuccess: () => {
-          onClose();
-        },
-      });
-    }
   };
 
   if (isLoading)
@@ -204,16 +191,18 @@ export default function BoardDetailModal({
               수정
             </button>
             <button
-              onClick={handleDelete}
-              disabled={isDeleting}
-              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50"
+              onClick={() => setIsDeleteModalOpen(true)}
+              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
             >
-              {isDeleting ? (
-                <LoadingSpinner size="sm" variant="spinner" color="white" />
-              ) : (
-                "삭제"
-              )}
+              삭제
             </button>
+
+            <BoardDeleteModal
+              isOpen={isDeleteModalOpen}
+              onClose={() => setIsDeleteModalOpen(false)}
+              boardId={boardId}
+              onDeleteSuccess={onClose}
+            />
           </div>
         </div>
       )}

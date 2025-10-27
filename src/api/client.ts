@@ -1,4 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import { refreshAccessToken } from "./auth";
 
 const API_URL = "https://front-mission.bigs.or.kr";
 
@@ -37,33 +38,12 @@ APIClient.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshToken = localStorage.getItem("refreshToken");
-        if (!refreshToken) {
-          throw new Error("No refresh token available");
-        }
+        const newAccessToken = await refreshAccessToken();
 
-        const response = await axios.post(
-          `${API_URL}/auth/refresh`,
-          { refreshToken },
-          {
-            headers: { "Content-Type": "application/json" },
-          }
-        );
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-        const { accessToken, refreshToken: newRefreshToken } = response.data;
-
-        localStorage.setItem("accessToken", accessToken);
-        if (newRefreshToken) {
-          localStorage.setItem("refreshToken", newRefreshToken);
-        }
-
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         return APIClient(originalRequest);
       } catch (refreshError) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("userName");
-        localStorage.removeItem("username");
         window.location.href = "/login";
         return Promise.reject(refreshError);
       }
