@@ -12,15 +12,13 @@ export default function BoardsClient() {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(0);
 
-  // 카테고리 로딩 상태 확인
   const { isLoading: isCategoriesLoading } = useBoardCategory();
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
-    setCurrentPage(0); // 카테고리 변경 시 첫 페이지로 리셋
+    setCurrentPage(0);
   };
 
-  // 로딩 중일 때 전체 화면 스피너 표시
   if (isCategoriesLoading) {
     return (
       <div className="flex justify-center items-center h-screen">

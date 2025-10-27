@@ -20,9 +20,8 @@ export const signup = async (payload: SignupPayload) => {
 export const signin = async (payload: LoginPayload) => {
   const response = await APIClient.post("/auth/signin", payload);
 
-  const accessToken = response.data.accessToken;
+  const { accessToken, refreshToken } = response.data;
 
-  // JWT 토큰을 디코딩하여 사용자 정보 추출
   if (accessToken) {
     const base64Url = accessToken.split(".")[1];
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -38,6 +37,7 @@ export const signin = async (payload: LoginPayload) => {
     const username = payload.username;
 
     localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
     localStorage.setItem("userName", userName || "");
     localStorage.setItem("username", username || "");
 
@@ -49,6 +49,7 @@ export const signin = async (payload: LoginPayload) => {
 
 export const logout = async () => {
   localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
   localStorage.removeItem("userName");
   localStorage.removeItem("username");
 };
